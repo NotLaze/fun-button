@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Do You Like This Website?</title>
+  <title>Do U Like Me?</title>
   <style>
     body {
       text-align: center;
       margin-top: 100px;
       font-family: Arial, sans-serif;
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
     }
 
     h1 {
@@ -24,19 +27,32 @@
       font-size: 18px;
       margin: 10px;
       position: relative;
+      cursor: pointer;
     }
 
     #noBtn {
       position: absolute;
     }
+
+    .watermark {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-size: 12px;
+      color: #999;
+      font-family: monospace;
+      opacity: 0.7;
+    }
   </style>
 </head>
 <body>
-  <h1>Do you like this website?</h1>
+  <h1>Do u like me?</h1>
   <div id="buttons">
     <button id="yesBtn" onclick="alert('Yay! 😊')">Yes</button>
     <button id="noBtn">No</button>
   </div>
+
+  <div class="watermark">notlxze</div>
 
   <script>
     const noBtn = document.getElementById('noBtn');
