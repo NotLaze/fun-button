@@ -1,84 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Do U Like Me?</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@notlaze - Ask me anything</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
   <style>
     body {
-      text-align: center;
       margin: 0;
-      font-family: Arial, sans-serif;
-      position: relative;
-      height: 100vh;
-      overflow: hidden;
+      font-family: 'Fredoka One', cursive;
+      background: linear-gradient(180deg, #ff4db8, #ff9933);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: #fff;
     }
 
-    h1 {
-      margin-top: 60px;
-      font-size: 2rem;
+    .username-card, .question-card {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
     }
 
-    #buttons {
-      margin-top: 30px;
-      position: relative;
-      height: 300px;
+    .username-card.active, .question-card.active {
+      display: block;
     }
 
-    button {
-      padding: 10px 20px;
-      font-size: 18px;
-      margin: 10px;
+    .logo {
+      font-size: 3rem;
+      font-weight: bold;
+      background: #000;
+      color: #fff;
+      padding: 5px 20px;
+      border-radius: 15px;
+      display: inline-block;
+      margin-bottom: 20px;
     }
 
-    #noBtn {
-      position: absolute;
-      z-index: 10;
+    .heading {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
     }
 
-    .watermark {
-      position: fixed;
-      bottom: 10px;
-      right: 15px;
-      font-size: 16px;
-      color: gray;
-      opacity: 0.5;
-      font-family: monospace;
+    .example {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 20px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #000;
+      text-align: center;
+    }
+
+    .profile {
+      background: #fff;
+      color: #000;
+      border-radius: 20px 20px 0 0;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+
+    .profile img {
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+    }
+
+    .profile h3 {
+      margin: 10px 0 0 0;
+      font-size: 1.1rem;
+    }
+
+    form textarea {
+      width: 100%;
+      margin: 10px 0;
+      padding: 14px;
+      border: none;
+      border-radius: 20px;
+      font-size: 1rem;
+    }
+
+    form button, .btn {
+      width: 100%;
+      padding: 15px;
+      background: #000;
+      color: #fff;
+      font-size: 1rem;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .footer-text {
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+
+    .footer-link {
+      width: 100%;
+      padding: 15px;
+      background: #000;
+      color: #fff;
+      font-size: 1rem;
+      border-radius: 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .small-links {
+      font-size: 0.7rem;
+      margin-top: 10px;
+      color: rgba(255,255,255,0.7);
     }
   </style>
 </head>
 <body>
-  <h1>Do u like me?</h1>
-  <div id="buttons">
-    <button id="yesBtn" onclick="alert('Yay! 😊')">Yes</button>
-    <button id="noBtn">No</button>
+  <div class="username-card active" id="step1">
+    <div class="logo">NGL</div>
+    <div class="heading">What's your Instagram handle?</div>
+    <div class="example">Ex: @champagnepapi</div>
+    <input type="text" id="username" class="input-field" placeholder="@" required>
+    <button class="btn" onclick="goToStep2()">Continue</button>
   </div>
 
-  <div class="watermark">notlxze</div>
+  <div class="question-card" id="step2">
+    <div class="profile">
+      <img src="https://i.imgur.com/fS2aMBT.jpg" alt="pfp">
+      <h3>@notlaze</h3>
+      <p>send me anonymous messages!</p>
+    </div>
+    <form action="https://formspree.io/f/mblylgbq" method="POST">
+      <input type="hidden" name="instagram_username" id="finalUsername">
+      <textarea name="question" rows="3" placeholder="Type your question here..." required></textarea>
+      <button type="submit">Send!</button>
+    </form>
+    <div class="footer-text">
+      👇 270 people just tapped the button 👇
+    </div>
+    <a href="#" class="footer-link">Get your own messages!</a>
+    <div class="small-links">Terms &nbsp;&nbsp; Privacy</div>
+  </div>
 
   <script>
-    const noBtn = document.getElementById('noBtn');
-
-    function moveButton() {
-      const btnWidth = noBtn.offsetWidth;
-      const btnHeight = noBtn.offsetHeight;
-      const padding = 10;
-
-      // Calculate max X and Y within the screen bounds
-      const maxX = window.innerWidth - btnWidth - padding;
-      const maxY = window.innerHeight - btnHeight - padding;
-
-      // Offset Y by 60px to avoid overlapping with the heading
-      const x = Math.random() * maxX;
-      const y = Math.random() * (maxY - 60) + 60;
-
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top = `${y}px`;
+    function goToStep2() {
+      const usernameInput = document.getElementById('username');
+      const username = usernameInput.value.trim();
+      if (username !== '') {
+        document.getElementById('finalUsername').value = username;
+        document.getElementById('step1').classList.remove('active');
+        document.getElementById('step2').classList.add('active');
+      } else {
+        usernameInput.focus();
+      }
     }
-
-    // Event listeners for desktop and mobile
-    noBtn.addEventListener('mouseover', moveButton);
-    noBtn.addEventListener('touchstart', moveButton); 
   </script>
 </body>
 </html>
