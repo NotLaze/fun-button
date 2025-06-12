@@ -1,172 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@notlaze - Ask me anything</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Are you stupid?</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Fredoka One', cursive;
-      background: linear-gradient(180deg, #ff4db8, #ff9933);
+      height: 100vh;
+      background: linear-gradient(to top, #ffccd5, #ffe6e9);
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      color: #fff;
+      align-items: center;
+      font-family: Arial, sans-serif;
     }
 
-    .username-card, .question-card {
-      display: none;
-      text-align: center;
-      padding: 20px;
-      width: 90%;
-      max-width: 400px;
-    }
-
-    .username-card.active, .question-card.active {
-      display: block;
-    }
-
-    .logo {
+    h1 {
       font-size: 3rem;
-      font-weight: bold;
-      background: #000;
-      color: #fff;
-      padding: 5px 20px;
-      border-radius: 15px;
-      display: inline-block;
-      margin-bottom: 20px;
+      color: #ff0055;
     }
 
-    .heading {
-      font-size: 1.3rem;
-      margin-bottom: 10px;
+    .buttons {
+      margin-top: 30px;
+      display: flex;
+      gap: 20px;
+      position: relative;
     }
 
-    .example {
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.6);
-      margin-bottom: 20px;
-    }
-
-    .input-field {
-      width: 100%;
-      padding: 16px;
-      font-size: 1.1rem;
+    button {
+      padding: 15px 30px;
+      font-size: 1.5rem;
       border: none;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.2);
-      color: #000;
-      text-align: center;
-    }
-
-    .profile {
-      background: #fff;
-      color: #000;
-      border-radius: 20px 20px 0 0;
-      padding: 15px;
-      margin-bottom: 15px;
-    }
-
-    .profile img {
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-    }
-
-    .profile h3 {
-      margin: 10px 0 0 0;
-      font-size: 1.1rem;
-    }
-
-    form textarea {
-      width: 100%;
-      margin: 10px 0;
-      padding: 14px;
-      border: none;
-      border-radius: 20px;
-      font-size: 1rem;
-    }
-
-    form button, .btn {
-      width: 100%;
-      padding: 15px;
-      background: #000;
-      color: #fff;
-      font-size: 1rem;
-      border: none;
-      border-radius: 20px;
+      border-radius: 10px;
       cursor: pointer;
-      margin-top: 15px;
+      transition: 0.2s ease-in-out;
     }
 
-    .footer-text {
-      margin-top: 10px;
-      font-size: 0.9rem;
+    .yes-btn {
+      background-color: #4CAF50;
+      color: white;
     }
 
-    .footer-link {
-      width: 100%;
-      padding: 15px;
-      background: #000;
-      color: #fff;
-      font-size: 1rem;
-      border-radius: 20px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 10px;
-    }
-
-    .small-links {
-      font-size: 0.7rem;
-      margin-top: 10px;
-      color: rgba(255,255,255,0.7);
+    .no-btn {
+      background-color: #f44336;
+      color: white;
+      position: absolute;
     }
   </style>
 </head>
 <body>
-  <div class="username-card active" id="step1">
-    <div class="logo">NGL</div>
-    <div class="heading">What's your Instagram handle?</div>
-    <div class="example">Ex: @champagnepapi</div>
-    <input type="text" id="username" class="input-field" placeholder="@" required>
-    <button class="btn" onclick="goToStep2()">Continue</button>
-  </div>
-
-  <div class="question-card" id="step2">
-    <div class="profile">
-      <img src="https://i.imgur.com/fS2aMBT.jpg" alt="pfp">
-      <h3>@notlaze</h3>
-      <p>send me anonymous messages!</p>
-    </div>
-    <form action="https://formspree.io/f/mblylgbq" method="POST">
-      <input type="hidden" name="instagram_username" id="finalUsername">
-      <textarea name="question" rows="3" placeholder="Type your question here..." required></textarea>
-      <button type="submit">Send!</button>
-    </form>
-    <div class="footer-text">
-      👇 270 people just tapped the button 👇
-    </div>
-    <a href="#" class="footer-link">Get your own messages!</a>
-    <div class="small-links">Terms &nbsp;&nbsp; Privacy</div>
+  <h1>Are you stupid?</h1>
+  <div class="buttons">
+    <button class="yes-btn" onclick="alert('I knew it! 😂')">Yes</button>
+    <button class="no-btn" id="noBtn">No</button>
   </div>
 
   <script>
-    function goToStep2() {
-      const usernameInput = document.getElementById('username');
-      const username = usernameInput.value.trim();
-      if (username !== '') {
-        document.getElementById('finalUsername').value = username;
-        document.getElementById('step1').classList.remove('active');
-        document.getElementById('step2').classList.add('active');
-      } else {
-        usernameInput.focus();
-      }
-    }
+    const noBtn = document.getElementById('noBtn');
+    const container = document.querySelector('.buttons');
+
+    noBtn.addEventListener('mouseover', () => {
+      const maxX = window.innerWidth - noBtn.offsetWidth;
+      const maxY = window.innerHeight - noBtn.offsetHeight;
+
+      const randX = Math.random() * maxX;
+      const randY = Math.random() * maxY;
+
+      noBtn.style.left = `${randX}px`;
+      noBtn.style.top = `${randY - 100}px`; // a little upward for better view
+    });
   </script>
 </body>
 </html>
