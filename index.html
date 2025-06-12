@@ -15,6 +15,7 @@
       align-items: center;
       font-family: Arial, sans-serif;
       overflow: hidden;
+      position: relative;
     }
 
     h1 {
@@ -23,26 +24,19 @@
       text-align: center;
     }
 
-    .buttons {
-      margin-top: 30px;
-      position: relative;
-      width: 100%;
-      height: 300px;
-    }
-
-    button {
+    .yes-btn, .no-btn {
       padding: 15px 30px;
       font-size: 1.5rem;
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      transition: 0.2s ease-in-out;
       position: absolute;
     }
 
     .yes-btn {
       background-color: #4CAF50;
       color: white;
+      bottom: 50px;
       left: 50%;
       transform: translateX(-50%);
     }
@@ -50,7 +44,7 @@
     .no-btn {
       background-color: #f44336;
       color: white;
-      top: 80px;
+      top: 200px;
       left: 50%;
       transform: translateX(-50%);
     }
@@ -58,10 +52,8 @@
 </head>
 <body>
   <h1>Are you stupid?</h1>
-  <div class="buttons">
-    <button class="yes-btn" onclick="alert('I knew it! 😂')">Yes</button>
-    <button class="no-btn" id="noBtn">No</button>
-  </div>
+  <button class="yes-btn" onclick="alert('I knew it! 😂')">Yes</button>
+  <button class="no-btn" id="noBtn">No</button>
 
   <script>
     const noBtn = document.getElementById('noBtn');
@@ -70,14 +62,16 @@
       const btnWidth = noBtn.offsetWidth;
       const btnHeight = noBtn.offsetHeight;
 
-      const maxX = window.innerWidth - btnWidth;
-      const maxY = window.innerHeight - btnHeight;
+      const padding = 20;
+      const maxX = window.innerWidth - btnWidth - padding;
+      const maxY = window.innerHeight - btnHeight - padding;
 
-      const randX = Math.random() * maxX;
-      const randY = Math.random() * (maxY - 100) + 50; // avoid top edge
+      const randX = Math.random() * maxX + padding / 2;
+      const randY = Math.random() * maxY + padding / 2;
 
       noBtn.style.left = `${randX}px`;
       noBtn.style.top = `${randY}px`;
+      noBtn.style.transform = "none"; // cancel center offset
     });
   </script>
 </body>
