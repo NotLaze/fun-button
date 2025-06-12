@@ -24,10 +24,13 @@
     }
 
     .buttons {
-      display: flex;
-      gap: 30px;
-      margin-top: 30px;
       position: relative;
+      width: 100%;
+      height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
     }
 
     button {
@@ -36,25 +39,28 @@
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      position: relative;
+      position: absolute;
       transition: top 0.1s, left 0.1s;
     }
 
     .yes-btn {
       background-color: #4CAF50;
       color: white;
+      left: calc(50% - 100px);
+      top: 100px;
     }
 
     .no-btn {
       background-color: #f44336;
       color: white;
-      position: absolute;
+      left: calc(50% + 100px);
+      top: 100px;
     }
   </style>
 </head>
 <body>
   <h1>Are you stupid?</h1>
-  <div class="buttons" id="btnContainer">
+  <div class="buttons">
     <button class="yes-btn" onclick="alert('I knew it! 😂')">Yes</button>
     <button class="no-btn" id="noBtn">No</button>
   </div>
@@ -62,37 +68,43 @@
   <script>
     const noBtn = document.getElementById('noBtn');
 
-    // Start in center next to Yes button
-    noBtn.style.left = '120px';
-    noBtn.style.top = '0px';
-
     document.addEventListener('mousemove', (e) => {
       const rect = noBtn.getBoundingClientRect();
-      const btnX = rect.left + rect.width / 2;
-      const btnY = rect.top + rect.height / 2;
+      const btnCenterX = rect.left + rect.width / 2;
+      const btnCenterY = rect.top + rect.height / 2;
 
-      const distX = e.clientX - btnX;
-      const distY = e.clientY - btnY;
-      const distance = Math.sqrt(distX * distX + distY * distY);
+      const dx = e.clientX - btnCenterX;
+      const dy = e.clientY - btnCenterY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
 
-      const maxDist = 100;
+      const threshold = 80;
+      if (distance < threshold) {
+        let moveX = dx > 0 ? -100 : 100;
+        let moveY = dy > 0 ? -100 : 100;
 
-      if (distance < maxDist) {
-        // Move away in opposite direction
-        const moveX = -distX / distance * 100;
-        const moveY = -distY / distance * 100;
+        // If diagonal, move both
+        if (Math.abs(dx) > 20 && Math.abs(dy) > 20) {
+          moveX = dx > 0 ? -100 : 100;
+          moveY = dy > 0 ? -100 : 100;
+        } else if (Math.abs(dx) > Math.abs(dy)) {
+          moveX = dx > 0 ? -100 : 100;
+          moveY = 0;
+        } else {
+          moveY = dy > 0 ? -100 : 100;
+          moveX = 0;
+        }
 
-        let newLeft = parseFloat(noBtn.style.left) + moveX;
-        let newTop = parseFloat(noBtn.style.top) + moveY;
+        let newLeft = noBtn.offsetLeft + moveX;
+        let newTop = noBtn.offsetTop + moveY;
 
         const btnWidth = noBtn.offsetWidth;
         const btnHeight = noBtn.offsetHeight;
+        const containerWidth = window.innerWidth;
+        const containerHeight = window.innerHeight;
 
-        // Clamp to screen bounds
-        const maxLeft = window.innerWidth - btnWidth;
-        const maxTop = window.innerHeight - btnHeight;
-        newLeft = Math.max(0, Math.min(newLeft, maxLeft));
-        newTop = Math.max(0, Math.min(newTop, maxTop));
+        // Clamp inside screen
+        newLeft = Math.max(0, Math.min(newLeft, containerWidth - btnWidth));
+        newTop = Math.max(0, Math.min(newTop, containerHeight - btnHeight));
 
         noBtn.style.left = newLeft + 'px';
         noBtn.style.top = newTop + 'px';
